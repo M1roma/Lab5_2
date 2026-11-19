@@ -35,3 +35,16 @@ int main() {
         printf("Error: Cannot open input.txt!\n");
         return 1; 
     }
+
+// Послідовно зчитуємо числові параметри з файлу за допомогою fscanf
+    fscanf(in_file, "%lf", &x_start);
+    fscanf(in_file, "%lf", &x_end);
+    fscanf(in_file, "%d", &points_count);
+    fscanf(in_file, "%lf", &step);
+
+    // Зчитуємо рядки тексту до символу переходу на новий рядок (\n)
+    fscanf(in_file, " %[^\n]", group);
+    fscanf(in_file, " %[^\n]", student_name);
+
+    //закриваємо файл 
+    fclose(in_file);
