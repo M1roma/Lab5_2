@@ -93,3 +93,29 @@ int main() {
     // Закриваємо обидва вихідні файли (дані остаточно зберігаються на диск)
     fclose(out_txt);
     fclose(out_bin);
+
+    // Читання даних із бінарного файлу у динамічний масив розміром 2N
+    // Відкриваємо бінарний файл у режимі читання ("rb" - read binary)
+    FILE *in_bin = fopen("data.bin", "rb");
+    if (in_bin == NULL) {
+        printf("Error: Cannot open data.bin for reading!\n");
+        return 1;
+    }
+
+    int N = 0; // Змінна для кількості рядків, яку прочитаємо з бінарного файлу
+    // Зчитуємо перше ціле число (кількість точок) з початку файлу
+    fread(&N, sizeof(int), 1, in_bin);
+
+    // Динамічно виділяємо пам'ять у купі під 2N чисел типу double (N пар x та f(x))
+    double *dyn_arr = (double *)malloc(2 * N * sizeof(double));
+    if (dyn_arr == NULL) {
+        printf("Error: Memory allocation failed!\n");
+        fclose(in_bin);
+        return 1;
+    }
+
+    // Одним викликом fread зчитуємо всі 2N чисел із бінарного файлу в динамічний масив
+    fread(dyn_arr, sizeof(double), 2 * N, in_bin);
+
+    // Закриваємо бінарний файл після завершення читання
+    fclose(in_bin);
